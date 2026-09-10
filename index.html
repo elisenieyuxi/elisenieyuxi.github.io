@@ -25,7 +25,9 @@
     --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:4.5rem}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  .bar nav a.on{color:var(--ink);border-bottom-color:var(--accent)}
   body{
     margin:0;
     background:var(--paper);
@@ -142,6 +144,8 @@
     font-family:var(--serif);font-weight:400;font-size:1.18rem;line-height:1.35;margin:0 0 .15rem;
   }
   .entry .org{color:var(--muted);font-size:.9rem;margin:0 0 .7rem}
+  .entry .org a,.entry h3 a,.rows a{text-decoration:none;border-bottom:1px solid var(--rule);transition:border-color .15s}
+  .entry .org a:hover,.entry h3 a:hover,.rows a:hover{border-bottom-color:var(--accent);color:var(--ink)}
   .entry ul{margin:0;padding:0;list-style:none;max-width:62ch}
   .entry li{position:relative;padding-left:1.15rem;margin-bottom:.5rem;font-size:.94rem}
   .entry li::before{
@@ -394,7 +398,7 @@
         <div class="when">Jul – Oct 2025</div>
         <div class="body">
           <h3>CEO assistant and industry analyst intern</h3>
-          <p class="org">Invest MENA · Shanghai &amp; Dubai</p>
+          <p class="org"><a href="http://www.investmena.cn/" target="_blank" rel="noopener">Invest MENA</a> · Shanghai and Dubai</p>
           <ul>
             <li>Wrote two flagship reports on Chinese products entering the Middle East and a white paper on UAE industrial investment policy, both used in client policy discussions.</li>
             <li>Benchmarked investment policy across countries to design a market-entry strategy the CEO adopted for client presentations; produced 8 meeting minutes and 5 client research briefs.</li>
@@ -430,7 +434,7 @@
         <div class="when">Jul – Dec 2024</div>
         <div class="body">
           <h3>Research intern</h3>
-          <p class="org">Saint Pierre Center for International Security · Beijing</p>
+          <p class="org"><a href="http://www.spcis.org/" target="_blank" rel="noopener">Saint Pierre Center for International Security</a> · Beijing</p>
           <ul>
             <li>Synthesized academic and policy literature for the China–South Asia Studies Research Group, using trade data, security indicators, and policy documents to assess China–India relations.</li>
             <li>Wrote a policy memo on China–India trade and security for institutional briefings, plus three sets of meeting notes from client roadshows.</li>
@@ -508,7 +512,7 @@
         <div class="when">Aug 2024 – present</div>
         <div class="body">
           <h3>Head, External Liaison Department</h3>
-          <p class="org">SAGA, a student-led initiative under Beyond the Pivot · Beijing and Hong Kong</p>
+          <p class="org"><a href="http://saga-xingguang.com/" target="_blank" rel="noopener">SAGA</a>, a student-led initiative under Beyond the Pivot · Beijing and Hong Kong</p>
           <p class="para">I built partnerships with 43 university volunteer associations across the mainland, Hong Kong and Macau, and three countries abroad, so that campuses could share what they had instead of each starting over. The department I run grew to ten people and recruited more than two hundred volunteers. With medical partners we produced a childhood-leukemia education guide that now hangs in over sixty metro stations.</p>
           <p class="tags"><span>43 partner associations</span><span>200+ volunteers</span><span>public health outreach</span></p>
         </div>
@@ -517,7 +521,7 @@
       <div class="entry">
         <div class="when">Aug 2023 – present</div>
         <div class="body">
-          <h3>Mulan Community Social Work Services Center, Beijing</h3>
+          <h3><a href="https://zh.wikipedia.org/wiki/%E6%9C%A8%E5%85%B0%E8%8A%B1%E5%BC%80%E7%A4%BE%E5%B7%A5%E6%9C%8D%E5%8A%A1%E4%B8%AD%E5%BF%83" target="_blank" rel="noopener">Mulan Community Social Work Services Center</a>, Beijing</h3>
           <p class="org">Social work, part-time</p>
           <p class="para">Mulan works with women who have migrated from the countryside into Beijing for work, and with the children who came with them. Two years of showing up in the same community taught me how school access really gets decided: by residence papers, by which district will take a child, by what a mother has the standing to insist on.</p>
           <p class="tags"><span>migrant families</span><span>school access</span><span>ongoing</span></p>
@@ -525,7 +529,7 @@
       </div>
     </div>
     <div class="rows">
-      <div><span>Chapter leader, Ping Pong Parkinson, Berkeley</span><span class="yr">Jul 2026 – present</span></div>
+      <div><span>Chapter leader, <a href="https://www.pingpongparkinson.org/" target="_blank" rel="noopener">Ping Pong Parkinson</a>, Berkeley</span><span class="yr">Jul 2026 – present</span></div>
       <div><span>President, Jingyun Volunteer Organization, Renmin University</span><span class="yr">Sep 2023 – present</span></div>
       <div><span>Deputy leader, Peer Mentor Program admissions group, Renmin University</span><span class="yr">Dec 2023 – present</span></div>
       <div><span>Volunteer, Social Impact Consulting Group, A Better Community</span><span class="yr">Apr 2025</span></div>
@@ -564,5 +568,20 @@
   <div class="wrap">Berkeley, California · Last updated September 2026</div>
 </footer>
 
+<script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.bar nav a'));
+  var map={};
+  links.forEach(function(a){var el=document.querySelector(a.getAttribute('href'));if(el)map[el.id]=a;});
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      var a=map[e.target.id];
+      if(!a)return;
+      if(e.isIntersecting){links.forEach(function(x){x.classList.remove('on')});a.classList.add('on');}
+    });
+  },{rootMargin:'-30% 0px -60% 0px'});
+  Object.keys(map).forEach(function(id){io.observe(document.getElementById(id))});
+})();
+</script>
 </body>
 </html>
